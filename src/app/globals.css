@@ -1,26 +1,125 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Colors */
+  --color-brand-bg: #faf9f6;
+  --color-brand-surface: #ffffff;
+  --color-brand-surface-muted: #f4f3f1;
+  --color-brand-surface-bright: #faf9f6;
+  --color-brand-surface-container-lowest: #ffffff;
+  --color-brand-surface-container-low: #f4f3f1;
+  --color-brand-surface-container: #efeeeb;
+  --color-brand-surface-container-high: #e9e8e5;
+  --color-brand-surface-container-highest: #e3e2e0;
+  --color-brand-text: #1a1c1a;
+  --color-brand-muted: #41474e;
+  --color-brand-accent: #286088;
+  --color-brand-accent-hover: #4479a2;
+  --color-brand-border: #e3e2e0;
+  --color-brand-outline: #71787f;
+  --color-brand-outline-variant: #c1c7cf;
+
+  /* Font Families */
+  --font-sans: var(--font-work-sans), system-ui, sans-serif;
+  --font-display: var(--font-plus-jakarta-sans), system-ui, sans-serif;
+  --font-work-sans: var(--font-work-sans), system-ui, sans-serif;
+  --font-plus-jakarta: var(--font-plus-jakarta-sans), system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  background-color: var(--color-brand-bg);
+  color: var(--color-brand-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+:root {
+  --navbar-height: 5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display {
+  font-family: var(--font-display);
+}
+
+.typography-h1 {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.typography-h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.typography-h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.typography-body-lg {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.typography-body-md {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.typography-label-md {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.05em;
+}
+
+.typography-caption {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.site-container {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .site-container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-container {
+    padding-inline: 2rem;
+  }
 }
