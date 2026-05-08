@@ -2,11 +2,20 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Button from "../ui/Button";
 import { Download } from "lucide-react";
 
+const navLinks = [
+    { name: "About", href: "/" },
+    { name: "Projects", href: "/projects" },
+    { name: "Skills", href: "/skills" },
+    { name: "Contact", href: "/contact" },
+];
+
 export default function Navbar() {
     const [open, setOpen] = useState(false);
+    const pathname = usePathname();
 
     return (
         <nav className="sticky top-0 z-50 pt-[env(safe-area-inset-top)] bg-brand-surface/95 backdrop-blur">
@@ -18,11 +27,36 @@ export default function Navbar() {
                 </Link>
 
                 {/* nav links center - hidden on small screens */}
-                <div className="hidden md:flex items-center gap-8 lg:gap-12">
-                    <Link className="typography-label-md text-brand-muted hover:text-brand-text transition-colors" href="/about">About</Link>
-                    <Link className="typography-label-md text-brand-muted hover:text-brand-text transition-colors" href="/projects">Projects</Link>
-                    <Link className="typography-label-md text-brand-muted hover:text-brand-text transition-colors" href="/skills">Skills</Link>
-                    <Link className="typography-label-md text-brand-muted hover:text-brand-text transition-colors" href="/contact">Contact</Link>
+                <div className="hidden md:flex items-center gap-8 lg:gap-12 h-full">
+                    {navLinks.map((link) => {
+                        const isActive = pathname === link.href;
+                        return (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                className={`typography-label-md transition-colors relative h-full flex items-center ${
+                                    isActive ? "text-brand-accent" : "text-brand-muted hover:text-brand-text"
+                                }`}
+                            >
+                                {link.name}
+                                {/* Active Indicator Line */}
+                                {isActive && (
+                                    <span
+                                        style={{
+                                            position: "absolute",
+                                            bottom: 0,
+                                            left: 0,
+                                            right: 0,
+                                            height: "2px",
+                                            backgroundColor: "var(--color-brand-accent)",
+                                            borderTopLeftRadius: "2px",
+                                            borderTopRightRadius: "2px",
+                                        }}
+                                    />
+                                )}
+                            </Link>
+                        );
+                    })}
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -54,19 +88,31 @@ export default function Navbar() {
 
             {/* Mobile dropdown */}
             {open && (
-                <div className="md:hidden bg-brand-surface shadow-inner">
+                <div className="md:hidden bg-brand-surface shadow-inner border-t border-brand-border">
                     <div className="site-container py-4">
                         <div className="flex flex-col gap-3">
-                            <Link onClick={() => setOpen(false)} className="typography-label-md text-brand-text" href="/about">About</Link>
-                            <Link onClick={() => setOpen(false)} className="typography-label-md text-brand-text" href="/projects">Projects</Link>
-                            <Link onClick={() => setOpen(false)} className="typography-label-md text-brand-text" href="/skills">Skills</Link>
-                            <Link onClick={() => setOpen(false)} className="typography-label-md text-brand-text" href="/contact">Contact</Link>
-                            <a href="#" className="mt-2 inline-block px-4 py-2 bg-brand-accent text-white rounded-md typography-label-md">Download CV</a>
+                            {navLinks.map((link) => {
+                                const isActive = pathname === link.href;
+                                return (
+                                    <Link
+                                        key={link.name}
+                                        onClick={() => setOpen(false)}
+                                        href={link.href}
+                                        className={`typography-label-md px-2 py-1 rounded-md ${
+                                            isActive ? "text-brand-accent bg-brand-accent/10" : "text-brand-text"
+                                        }`}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                );
+                            })}
+                            <a href="#" className="mt-2 inline-block px-4 py-2 bg-brand-accent text-white rounded-md typography-label-md text-center">
+                                Download CV
+                            </a>
                         </div>
                     </div>
                 </div>
             )}
-
         </nav>
     );
 }

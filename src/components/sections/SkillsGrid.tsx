@@ -1,85 +1,268 @@
-import { Code, Database, Wrench, CheckCircle } from "lucide-react";
+import {
+    Code2,
+    Database,
+    Wrench,
+    CheckCircle2,
+    CircleDashed,
+    Globe,
+    Layers,
+    Paintbrush,
+    GitBranch,
+    Container,
+    Infinity,
+    FlaskConical,
+} from "lucide-react";
 
-const frontendFrameworks = ["Angular", "Next.js", "React.js", "TypeScript"];
-const frontendStyling = ["Tailwind CSS", "SCSS", "Figma"];
-const backend = ["Node.js", "Express", "NestJS", "MongoDB", "PostgreSQL", "MySQL", "Supabase"];
-const tools = [
-    { icon: Code, label: "Git & GitHub" },
-    { icon: Code, label: "VS Code" },
-    { icon: Database, label: "Docker" },
-    { icon: Database, label: "Postman" },
-    { icon: CheckCircle, label: "AI Tools" },
+/* ── Data ─────────────────────────────────────────────── */
+
+const frontendSections = [
+    {
+        label: "Core Frameworks",
+        skills: [
+            { icon: Globe,      name: "React" },
+            { icon: Code2,      name: "TypeScript" },
+            { icon: Layers,     name: "Next.js" },
+            { icon: Code2,      name: "Angular" },
+        ],
+    },
+    {
+        label: "Styling & UI",
+        skills: [
+            { icon: Paintbrush, name: "Tailwind CSS" },
+            { icon: Paintbrush, name: "HTML5 / CSS3" },
+            { icon: Paintbrush, name: "SCSS" },
+            { icon: Paintbrush, name: "Figma" },
+        ],
+    },
 ];
+
+type BackendSkill = { name: string; known: boolean };
+const backendSkills: BackendSkill[] = [
+    { name: "Node.js",    known: true  },
+    { name: "NestJS",     known: true  },
+    { name: "PostgreSQL", known: true  },
+    { name: "MongoDB",    known: true  },
+    { name: "MySQL",      known: true  },
+    { name: "Supabase",   known: false },
+    { name: "GraphQL",    known: false },
+];
+
+const tools = [
+    { icon: GitBranch,    label: "Git & GitHub"  },
+    { icon: Container,    label: "Docker"         },
+    { icon: Infinity,     label: "CI/CD"          },
+    { icon: FlaskConical, label: "Jest / Testing" },
+];
+
+/* ── Component ────────────────────────────────────────── */
 
 export default function SkillsGrid() {
     return (
-        <section className="max-w-6xl mx-auto px-6 py-16">
-            <div className="text-center max-w-3xl mx-auto mb-12">
-                <h1 className="typography-h1 text-brand-text mb-4">Technical Toolkit</h1>
-                <p className="typography-body-lg text-brand-muted">
-                    A curated list of technologies I use to build scalable, approachable, and robust applications. Always learning and expanding.
-                </p>
-            </div>
+        <section style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
+            <div className="site-container">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 p-6 rounded-2xl border border-brand-border bg-brand-surface shadow-sm">
-                    <h3 className="typography-h3 flex items-center gap-2 mb-4">
-                        <Code size={20} />
-                        Frontend
-                    </h3>
+                {/* ── Hero header ─────────────────────────── */}
+                <div
+                    style={{
+                        textAlign: "center",
+                        maxWidth: "38rem",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginBottom: "3rem",
+                    }}
+                >
+                    <h1
+                        className="typography-h1"
+                        style={{ color: "var(--color-brand-text)", marginBottom: "1rem" }}
+                    >
+                        Technical Toolkit
+                    </h1>
+                    <p
+                        className="typography-body-lg"
+                        style={{ color: "var(--color-brand-muted)" }}
+                    >
+                        A curated list of technologies I use to build scalable, approachable,
+                        and robust applications. Always eagerly learning and expanding.
+                    </p>
+                </div>
 
-                    <div className="mb-4">
-                        <p className="typography-caption text-brand-muted mb-2">Frameworks</p>
-                        <div className="flex flex-wrap gap-2">
-                            {frontendFrameworks.map((skill) => (
-                                <span key={skill} className="px-3 py-1 bg-brand-accent/10 text-brand-accent rounded-full typography-caption">
-                                    {skill}
-                                </span>
+                {/* ── Top row: Frontend (wide) + Backend (narrow) ── */}
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "minmax(0,5fr) minmax(0,3fr)",
+                        gap: "1.5rem",
+                        marginBottom: "1.5rem",
+                    }}
+                >
+                    {/* Frontend card */}
+                    <div
+                        style={{
+                            backgroundColor: "var(--color-brand-surface)",
+                            border: "1px solid var(--color-brand-border)",
+                            borderRadius: "1rem",
+                            padding: "2rem",
+                        }}
+                    >
+                        {/* Card heading */}
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1.75rem" }}>
+                            <Code2 size={20} style={{ color: "var(--color-brand-text)" }} />
+                            <h2
+                                className="typography-h2"
+                                style={{ color: "var(--color-brand-text)", fontSize: "1.375rem" }}
+                            >
+                                Frontend Development
+                            </h2>
+                        </div>
+
+                        {/* Sub-sections */}
+                        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                            {frontendSections.map((section) => (
+                                <div key={section.label}>
+                                    <p
+                                        className="typography-body-md"
+                                        style={{
+                                            color: "var(--color-brand-text)",
+                                            fontWeight: 500,
+                                            marginBottom: "0.625rem",
+                                        }}
+                                    >
+                                        {section.label}
+                                    </p>
+                                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                                        {section.skills.map(({ icon: Icon, name }) => (
+                                            <span
+                                                key={name}
+                                                style={{
+                                                    display: "inline-flex",
+                                                    alignItems: "center",
+                                                    gap: "0.375rem",
+                                                    backgroundColor: "var(--color-brand-bg)",
+                                                    border: "1px solid var(--color-brand-border)",
+                                                    borderRadius: "9999px",
+                                                    padding: "0.3rem 0.75rem",
+                                                    color: "var(--color-brand-muted)",
+                                                    fontSize: "0.85rem",
+                                                }}
+                                            >
+                                                <Icon size={13} />
+                                                {name}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     </div>
 
-                    <div>
-                        <p className="typography-caption text-brand-muted mb-2">Styling</p>
-                        <div className="flex flex-wrap gap-2">
-                            {frontendStyling.map((skill) => (
-                                <span key={skill} className="px-3 py-1 bg-brand-accent/10 text-brand-accent rounded-full typography-caption">
-                                    {skill}
-                                </span>
+                    {/* Backend card */}
+                    <div
+                        style={{
+                            backgroundColor: "var(--color-brand-surface)",
+                            border: "1px solid var(--color-brand-border)",
+                            borderRadius: "1rem",
+                            padding: "2rem",
+                        }}
+                    >
+                        {/* Card heading */}
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1.75rem" }}>
+                            <Database size={20} style={{ color: "#c27c2c" }} />
+                            <h2
+                                className="typography-h2"
+                                style={{ color: "var(--color-brand-text)", fontSize: "1.375rem" }}
+                            >
+                                Backend
+                            </h2>
+                        </div>
+
+                        {/* Row list */}
+                        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                            {backendSkills.map(({ name, known }) => (
+                                <div
+                                    key={name}
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        backgroundColor: "var(--color-brand-bg)",
+                                        border: "1px solid var(--color-brand-border)",
+                                        borderRadius: "0.5rem",
+                                        padding: "0.6rem 0.875rem",
+                                    }}
+                                >
+                                    <span
+                                        className="typography-body-md"
+                                        style={{ color: "var(--color-brand-text)", fontSize: "0.9rem" }}
+                                    >
+                                        {name}
+                                    </span>
+                                    {known
+                                        ? <CheckCircle2 size={16} style={{ color: "#4caf72", flexShrink: 0 }} />
+                                        : <CircleDashed  size={16} style={{ color: "var(--color-brand-outline)", flexShrink: 0 }} />
+                                    }
+                                </div>
                             ))}
                         </div>
                     </div>
                 </div>
 
-                <div className="p-6 rounded-2xl border border-brand-border bg-brand-surface shadow-sm">
-                    <h3 className="typography-h3 mb-4 flex items-center gap-2">
-                        <Database size={20} /> Backend
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                        {backend.map((skill) => (
-                            <span key={skill} className="px-3 py-1 bg-brand-accent/10 text-brand-accent rounded-full typography-caption">
-                                {skill}
-                            </span>
+                {/* ── Tools & Workflow (full width) ──────────── */}
+                <div
+                    style={{
+                        backgroundColor: "var(--color-brand-surface)",
+                        border: "1px solid var(--color-brand-border)",
+                        borderRadius: "1rem",
+                        padding: "2rem",
+                    }}
+                >
+                    {/* Card heading */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1.75rem" }}>
+                        <Wrench size={20} style={{ color: "var(--color-brand-text)" }} />
+                        <h2
+                            className="typography-h2"
+                            style={{ color: "var(--color-brand-text)", fontSize: "1.375rem" }}
+                        >
+                            Tools &amp; Workflow
+                        </h2>
+                    </div>
+
+                    {/* Icon tiles */}
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(2, 1fr)",
+                            gap: "1rem",
+                        }}
+                        className="md:grid-cols-3 lg:grid-cols-6"
+                    >
+                        {tools.map(({ icon: Icon, label }) => (
+                            <div
+                                key={label}
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    gap: "0.625rem",
+                                    backgroundColor: "var(--color-brand-bg)",
+                                    border: "1px solid var(--color-brand-border)",
+                                    borderRadius: "0.75rem",
+                                    padding: "1.25rem 1rem",
+                                    textAlign: "center",
+                                }}
+                            >
+                                <Icon size={26} style={{ color: "var(--color-brand-muted)" }} />
+                                <span
+                                    className="typography-caption"
+                                    style={{ color: "var(--color-brand-text)", fontWeight: 500 }}
+                                >
+                                    {label}
+                                </span>
+                            </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="lg:col-span-3 p-6 rounded-2xl border border-brand-border bg-brand-surface shadow-sm">
-                    <h3 className="typography-h3 mb-4 flex items-center gap-2">
-                        <Wrench size={20} /> Tools
-                    </h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {tools.map((tool) => {
-                            const Icon = tool.icon;
-                            return (
-                                <div key={tool.label} className="flex flex-col items-center justify-center p-4 rounded-lg bg-brand-border/20 hover:bg-brand-border/40 transition-colors text-center gap-2">
-                                    <Icon size={28} className="text-brand-muted" />
-                                    <span className="typography-caption font-medium text-brand-text">{tool.label}</span>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
             </div>
         </section>
     );
