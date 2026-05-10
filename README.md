@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hirantha Portfolio
+
+A personal portfolio built with Next.js App Router, TypeScript, and Tailwind CSS v4.
+
+The project follows a warm, friendly, minimal design direction defined in `DESIGN.md`, and includes reusable layout/components for scaling into a CMS-backed portfolio.
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript 5
+- Tailwind CSS v4
+- Lucide React icons
+- next/font (Plus Jakarta Sans + Work Sans)
+
+## Current Features
+
+- Sticky top navigation with responsive mobile menu
+- Hero section with profile image and call-to-action buttons
+- Skills page with categorized toolkit cards
+- Shared global design tokens in `src/app/globals.css`
+- Layout shell with global Navbar and Footer
+- Route placeholders for About, Projects, Project Detail, and Contact
+
+## Project Structure
+
+```text
+.
+├── DESIGN.md
+├── src
+│   ├── app
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── globals.css
+│   │   ├── about/page.tsx
+│   │   ├── contact/page.tsx
+│   │   ├── projects/page.tsx
+│   │   ├── projects/[slug]/page.tsx
+│   │   └── skills/page.tsx
+│   ├── components
+│   │   ├── layout
+│   │   │   ├── Navbar.tsx
+│   │   │   └── Footer.tsx
+│   │   ├── sections
+│   │   │   ├── Hero.tsx
+│   │   │   ├── Journey.tsx
+│   │   │   ├── SkillsGrid.tsx
+│   │   │   └── SoftSkills.tsx
+│   │   └── ui
+│   │       └── Button.tsx
+│   ├── sanity
+│   │   ├── client.ts
+│   │   ├── queries.ts
+│   │   └── schemas
+│   └── types
+└── package.json
+```
+
+## Routes
+
+- `/` Home page (Hero)
+- `/about` About placeholder
+- `/projects` Projects placeholder
+- `/projects/[slug]` Project detail placeholder
+- `/skills` Skills grid
+- `/contact` Contact placeholder
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Run development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Build for production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## Available Scripts
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run dev` Start local development server
+- `npm run build` Create production build
+- `npm run start` Start production server
+- `npm run lint` Run ESLint
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Design System Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Core design palette, typography, spacing, and component behavior are documented in `DESIGN.md`.
+- Global tokens and typography utility classes are defined in `src/app/globals.css`.
+- Navbar height is controlled with Tailwind classes in `src/components/layout/Navbar.tsx` and linked viewport spacing token `--navbar-height` in `src/app/globals.css`.
 
-## Deploy on Vercel
+## Images
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Remote image loading from Unsplash is enabled in `next.config.ts` via `images.remotePatterns`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## CMS Integration Status
+
+Sanity directories and schema files are present, but CMS client/query files are currently placeholders:
+
+- `src/sanity/client.ts` (empty)
+- `src/sanity/queries.ts` (empty)
+
+This means pages are currently rendered from local component content only.
+
+## Next Improvements
+
+- Replace route placeholders with full page content
+- Connect Sanity client and queries
+- Wire project detail route to real project data
+- Add SEO metadata per page
+- Add tests for key components and routing behavior
+
+## License
+
+This project is intended for personal portfolio use.
