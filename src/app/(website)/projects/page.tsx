@@ -4,7 +4,10 @@ import ProjectCard from '@/components/ui/ProjectCard'
 import { Project } from '@/types'
 
 export default async function ProjectsPage() {
-  const projects = await client.fetch<Project[]>(PROJECTS_QUERY)
+  const projects = await client.fetch<Project[]>(PROJECTS_QUERY, {}, {
+    cache: 'force-cache',
+    next: { revalidate: 3600 }
+  })
 
   return (
     <main className="flex-grow flex flex-col" >
@@ -20,8 +23,8 @@ export default async function ProjectsPage() {
       {/* Projects Grid */}
       <section className="site-container flex-grow" style={{ paddingBottom: "8rem" }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projects.map((project) => (
-            <ProjectCard key={project._id} project={project} />
+          {projects.map((project, index) => (
+            <ProjectCard key={project._id} project={project} index={index} />
           ))}
         </div>
       </section>

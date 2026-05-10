@@ -1,52 +1,50 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { Project } from '@/types'
 import { urlFor } from '@/sanity/lib/image'
 
 interface ProjectCardProps {
   project: Project
+  index?: number
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, index }: ProjectCardProps) {
   return (
-    <div className="bg-brand-surface-container-lowest border border-brand-surface-container-highest hover:shadow-sm hover:shadow-brand-accent/10 hover:-translate-y-1 transition-all duration-300 flex flex-col group mb-6 h-full">
+    <div className="bg-brand-surface-container-lowest border border-brand-surface-container-highest hover:shadow-sm hover:shadow-brand-accent/10 hover:-translate-y-1 transition-[transform,shadow] duration-300 flex flex-col group mb-6 h-full will-change-transform">
 
       {/* Thumbnail */}
-      <Link href={`/projects/${project.slug.current}`} className="block aspect-video w-full overflow-hidden bg-brand-surface-container relative">
+      <div className="block aspect-video w-full overflow-hidden bg-brand-surface-container relative">
         {project.thumbnail ? (
           <Image
             src={urlFor(project.thumbnail).width(800).height(500).url()}
             alt={project.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            loading="eager"
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            loading={index === 0 ? "eager" : "lazy"}
+            priority={index === 0}
+            className="object-cover group-hover:scale-105 transition-transform duration-300 will-change-transform"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-brand-muted">
             No image
           </div>
         )}
-      </Link>
+      </div>
 
       {/* Content */}
       <div className="flex-1 flex flex-col" style={{ padding: '15px', marginLeft: '5px' }}>
 
-        {/* Title & Description */}
-        <div style={{ marginBottom: '32px' }}>
+        {/* Title & Description & Tech Stack - takes available space */}
+        <div className="flex-1" style={{ paddingBottom: '16px' }}>
           <h3 className="typography-h3 text-brand-text" style={{ marginBottom: '16px' }}>
-            <Link href={`/projects/${project.slug.current}`} className="hover:text-brand-accent transition-colors duration-200">
+            <span className="transition-colors duration-200">
               {project.title}
-            </Link>
+            </span>
           </h3>
 
-          <p className="typography-body-md text-brand-muted" style={{ lineHeight: 1.6 }}>
+          <p className="typography-body-md text-brand-muted" style={{ lineHeight: 1.6, marginBottom: '20px' }}>
             {project.description}
           </p>
-        </div>
 
-        {/* Tech Stack */}
-        <div style={{ marginBottom: '20px' }}>
           <div className="flex flex-wrap gap-2">
             {project.techStack?.map((tech) => (
               <span
@@ -60,7 +58,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </div>
         </div>
 
-        {/* GitHub & Source */}
+        {/* GitHub & Source - fixed at bottom */}
         <div style={{ paddingTop: '24px', borderTop: '1px solid #e3e2e0' }}>
           {project.githubUrl ? (
             <a
@@ -69,7 +67,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 typography-label-md text-brand-muted hover:text-brand-accent transition-colors duration-200 group/link"
             >
-              <Image src="/icons/github-sign.png" alt="GitHub" width={24} height={24} className="group-hover/link:scale-110 transition-transform duration-200" />
+              <Image src="/icons/github-sign.png" alt="GitHub" width={24} height={24} className="group-hover/link:scale-110 transition-transform duration-200 will-change-transform" />
               <span>Source</span>
             </a>
           ) : (
