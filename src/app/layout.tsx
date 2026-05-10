@@ -5,11 +5,15 @@ import "./globals.css";
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
+  display: 'swap',
+  preload: true,
 });
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
   subsets: ["latin"],
+  display: 'swap',
+  preload: true,
 });
 
 export const metadata: Metadata = {
