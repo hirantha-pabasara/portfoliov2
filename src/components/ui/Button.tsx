@@ -1,3 +1,5 @@
+"use client";
+
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonVariant = "primary" | "outline";
