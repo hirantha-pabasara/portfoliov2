@@ -9,15 +9,17 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="bg-brand-surface-container-lowest rounded-2xl border border-brand-surface-container-highest p-6 hover:shadow-sm hover:shadow-brand-accent/10 hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+    <div className="bg-brand-surface-container-lowest border border-brand-surface-container-highest hover:shadow-sm hover:shadow-brand-accent/10 hover:-translate-y-1 transition-all duration-300 flex flex-col group mb-6 h-full">
 
       {/* Thumbnail */}
-      <Link href={`/projects/${project.slug.current}`} className="block aspect-video w-full mb-6 rounded-xl overflow-hidden bg-brand-surface-container relative">
+      <Link href={`/projects/${project.slug.current}`} className="block aspect-video w-full overflow-hidden bg-brand-surface-container relative">
         {project.thumbnail ? (
           <Image
             src={urlFor(project.thumbnail).width(800).height(500).url()}
             alt={project.title}
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            loading="eager"
             className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
@@ -28,46 +30,56 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </Link>
 
       {/* Content */}
-      <h3 className="typography-h3 text-brand-text mb-2 ">
-        <Link href={`/projects/${project.slug.current}`} className="hover:text-brand-accent transition-colors">
-          {project.title}
-        </Link>
-      </h3>
+      <div className="flex-1 flex flex-col" style={{ padding: '15px', marginLeft: '5px' }}>
 
-      <p className="typography-body-md text-brand-muted mb-6 flex-grow">
-        {project.description}
-      </p>
+        {/* Title & Description */}
+        <div style={{ marginBottom: '32px' }}>
+          <h3 className="typography-h3 text-brand-text" style={{ marginBottom: '16px' }}>
+            <Link href={`/projects/${project.slug.current}`} className="hover:text-brand-accent transition-colors duration-200">
+              {project.title}
+            </Link>
+          </h3>
 
-      {/* Tech Stack */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        {project.techStack?.map((tech) => (
-          <span
-            key={tech}
-            className="px-3 py-1 bg-brand-accent/10 text-brand-accent typography-caption rounded-full"
-          >
-            {tech}
-          </span>
-        ))}
-      </div>
+          <p className="typography-body-md text-brand-muted" style={{ lineHeight: 1.6 }}>
+            {project.description}
+          </p>
+        </div>
 
-      {/* Buttons */}
-      <div className="flex gap-4 mt-auto">
-        {project.githubUrl ? (
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 typography-label-md text-brand-muted hover:text-brand-accent transition-colors"
-          >
-            <Image src="/icons/github-sign.png" alt="GitHub" width={20} height={20} />
-            Source
-          </a>
-        ) : (
-          <span className="inline-flex items-center gap-2 typography-label-md text-brand-muted/40 cursor-not-allowed">
-            <Image src="/icons/github-sign.png" alt="GitHub" width={20} height={20} className="opacity-40" />
-            Source Unavailable
-          </span>
-        )}
+        {/* Tech Stack */}
+        <div style={{ marginBottom: '20px' }}>
+          <div className="flex flex-wrap gap-2">
+            {project.techStack?.map((tech) => (
+              <span
+                key={tech}
+                className="bg-brand-accent/10 text-brand-accent border border-brand-accent/20"
+                style={{ padding: '4px 10px', fontSize: '12px', borderRadius: '4px' }}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* GitHub & Source */}
+        <div style={{ paddingTop: '24px', borderTop: '1px solid #e3e2e0' }}>
+          {project.githubUrl ? (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 typography-label-md text-brand-muted hover:text-brand-accent transition-colors duration-200 group/link"
+            >
+              <Image src="/icons/github-sign.png" alt="GitHub" width={24} height={24} className="group-hover/link:scale-110 transition-transform duration-200" />
+              <span>Source</span>
+            </a>
+          ) : (
+            <span className="inline-flex items-center gap-2.5 typography-label-md text-brand-muted/40 cursor-not-allowed">
+              <Image src="/icons/github-sign.png" alt="GitHub" width={24} height={24} className="opacity-40" />
+              <span>Source Unavailable</span>
+            </span>
+          )}
+        </div>
+
       </div>
 
     </div>
