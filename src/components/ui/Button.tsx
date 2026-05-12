@@ -1,14 +1,15 @@
 "use client";
 
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonVariant = "primary" | "outline";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, AnchorHTMLAttributes<HTMLAnchorElement> {
     children: ReactNode;
     icon?: ReactNode;
     variant?: ButtonVariant;
     className?: string;
+    href?: string;
 }
 
 export default function Button({
@@ -17,39 +18,53 @@ export default function Button({
     variant = "primary",
     className,
     type = "button",
+    href,
     ...props
 }: ButtonProps) {
     const baseStyles = `
-    inline-flex items-center justify-center gap-2
-        px-4 py-2 rounded-md
-        text-sm font-semibold leading-none
-        transition-all duration-200
-    active:scale-95
-  `;
+        inline-flex items-center justify-center gap-2.5
+        px-6 py-3 rounded-xl
+        text-[15px] font-bold tracking-tight leading-none
+        transition-all duration-300 ease-out
+        active:scale-[0.97]
+        disabled:opacity-50 disabled:pointer-events-none
+    `;
 
     const variants = {
         primary: `
             bg-brand-accent
-      text-white
-            shadow-sm shadow-brand-accent/25
+            text-white
+            shadow-[0_4px_14px_0_rgba(40,96,136,0.39)]
             hover:bg-brand-accent-hover
-            hover:shadow-md hover:shadow-brand-accent/30
-    `,
+            hover:shadow-[0_6px_20px_rgba(40,96,136,0.23)]
+            hover:-translate-y-0.5
+        `,
 
         outline: `
-            border border-brand-accent/70
+            border-2 border-brand-accent/30
             text-brand-accent
-            bg-white
-            hover:bg-brand-accent
-      hover:text-white
-            hover:shadow-sm hover:shadow-brand-accent/20
-    `,
+            bg-transparent
+            hover:bg-brand-accent/5
+            hover:border-brand-accent
+            hover:-translate-y-0.5
+        `,
     };
+
+    const sharedClassName = `${baseStyles} ${variants[variant]} ${className ?? ""}`;
+
+    if (href) {
+        return (
+            <a className={sharedClassName} href={href} {...props}>
+                {icon}
+                {children}
+            </a>
+        );
+    }
 
     return (
         <button
             type={type}
-                        className={`${baseStyles} ${variants[variant]} ${className ?? ""}`}
+            className={sharedClassName}
             {...props}
         >
             {icon}
