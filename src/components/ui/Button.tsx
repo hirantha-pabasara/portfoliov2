@@ -4,20 +4,28 @@ import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonVariant = "primary" | "outline";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, AnchorHTMLAttributes<HTMLAnchorElement> {
+type ButtonCommonProps = {
     children: ReactNode;
     icon?: ReactNode;
     variant?: ButtonVariant;
     className?: string;
-    href?: string;
-}
+};
+
+type ButtonAsButtonProps = ButtonCommonProps & ButtonHTMLAttributes<HTMLButtonElement> & {
+    href?: never;
+};
+
+type ButtonAsLinkProps = ButtonCommonProps & AnchorHTMLAttributes<HTMLAnchorElement> & {
+    href: string;
+};
+
+type ButtonProps = ButtonAsButtonProps | ButtonAsLinkProps;
 
 export default function Button({
     children,
     icon,
     variant = "primary",
     className,
-    type = "button",
     href,
     ...props
 }: ButtonProps) {
@@ -53,19 +61,23 @@ export default function Button({
     const sharedClassName = `${baseStyles} ${variants[variant]} ${className ?? ""}`;
 
     if (href) {
+        const anchorProps = props as AnchorHTMLAttributes<HTMLAnchorElement>;
+
         return (
-            <a className={sharedClassName} href={href} {...props}>
+            <a className={sharedClassName} href={href} {...anchorProps}>
                 {icon}
                 {children}
             </a>
         );
     }
 
+    const buttonProps = props as ButtonHTMLAttributes<HTMLButtonElement>;
+
     return (
         <button
-            type={type}
+            type={buttonProps.type ?? "button"}
             className={sharedClassName}
-            {...props}
+            {...buttonProps}
         >
             {icon}
             {children}
